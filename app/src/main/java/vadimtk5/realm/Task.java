@@ -7,7 +7,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Task extends RealmObject {
     @PrimaryKey
-    private int id;
+    private int id; // Зкшьфкн лун
     private String name;
     private String description;
     private Date date;
