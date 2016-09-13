@@ -9,19 +9,20 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="0dp">
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimary"
+            android:theme="@style/AppTheme.Toolbar" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -33,5 +34,6 @@
         app:fabSize="normal"
         app:layout_anchor="@+id/my_recycler_view"
         app:layout_anchorGravity="right|bottom"
+        app:srcCompat="@drawable/ic_add_white_24dp"
         app:useCompatPadding="true" />
 </android.support.design.widget.CoordinatorLayout>

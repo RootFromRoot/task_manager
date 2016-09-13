@@ -2,6 +2,7 @@ package vadimtk5.realm;
 
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +46,6 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.dataSet = dataSet;
     }
 
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -74,7 +74,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             ((MyViewHolder) holder).title.setText(task.getName());
             ((MyViewHolder) holder).genre.setText(task.getDescription());
-            ((MyViewHolder) holder).year.setText(task.getDate().toString());
+            ((MyViewHolder) holder).year.setText(task.getFormattedDate());
         } else if (holder instanceof ButtonViewHolder) {
 
         }
@@ -92,5 +92,9 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void addTask(Task task) {
         getDataSet().add(task);
         notifyItemInserted(getDataSet().indexOf(task));
+    }
+
+    public void removeTask() {
+
     }
 }

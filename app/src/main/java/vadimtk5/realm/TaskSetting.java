@@ -11,6 +11,7 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 
 import java.util.Date;
+import java.util.Random;
 
 public class TaskSetting extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();

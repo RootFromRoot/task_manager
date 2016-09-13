@@ -7,8 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import vadimtk5.realm.utils.RequestCodes;
 public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
 
+    private Toolbar toolbar;
     private List<Task> dataSet = new ArrayList<>();
     private RecyclerView recyclerView;
     private MyAdapter adapter;
@@ -36,12 +39,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setupViews();
+        setupToolbar();
         setupRealm();
         setupRecyclerView();
-
     }
 
-    private void setupRealm() {//конфігурація
+    private void setupToolbar() {
+        setSupportActionBar(toolbar);
+    }
+
+    private void setupRealm() {
         Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this)
                 .name(Realm.DEFAULT_REALM_NAME)
                 .deleteRealmIfMigrationNeeded()
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViews() {
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     private List<Task> fetchTasksFromDb() {

@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
-            android:inputType="text"
+            android:inputType="textCapSentences"
             android:lines="1"
             android:maxLines="1"
             android:nextFocusDown="@+id/editText2" />
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="Description"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine|textCapSentences" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
