@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="vadimtk5.realm">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,10 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TaskSetting"
+        <activity
+            android:name=".TaskSetting"
             android:windowSoftInputMode="adjustResize">
-
+            <receiver android:name=".AlarmManagerBroadcastReceiver" />
         </activity>
+        <activity android:name=".lookTask"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package vadimtk5.realm;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +21,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<Task> dataSet;
     private Context context;
-
+    private View.OnClickListener onClickListener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public View rootView;
@@ -65,12 +66,15 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         if (holder instanceof MyViewHolder) {
-            ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, dataSet.get(holder.getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            if (onClickListener != null) {
+                ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.class, LookTask.class);//оцей блядь
+
+                    }
+                });
+            }
 
             ((MyViewHolder) holder).title.setText(task.getName());
             ((MyViewHolder) holder).genre.setText(task.getDescription());
@@ -95,6 +99,13 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void removeTask() {
+
+    }
+
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+
 
     }
 }

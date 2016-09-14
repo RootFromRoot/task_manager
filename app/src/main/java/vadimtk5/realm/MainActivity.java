@@ -27,6 +27,8 @@ import vadimtk5.realm.utils.RequestCodes;
 public class MainActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
 
+    private AlarmManagerBroadcastReceiver alarm;
+
     private Toolbar toolbar;
     private List<Task> dataSet = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
         setupRealm();
         setupRecyclerView();
+        alarm=new AlarmManagerBroadcastReceiver();
+
+
     }
 
     private void setupToolbar() {
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
+
     private List<Task> fetchTasksFromDb() {
         return realm.where(Task.class).findAll();
     }
@@ -80,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     public void addNewTask(View view) {
