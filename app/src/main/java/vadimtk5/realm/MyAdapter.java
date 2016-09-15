@@ -29,6 +29,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public MyViewHolder(View view) {
             super(view);
+            context = view.getContext();
             rootView = view.findViewById(R.id.root_view);
             title = (TextView) view.findViewById(R.id.title);
             genre = (TextView) view.findViewById(R.id.genre);
@@ -70,8 +71,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.class, LookTask.class);//оцей блядь
-
+                        Intent intent = new Intent(context, LookTask.class);//оцей блядь
+                        context.startActivity(intent);
                     }
                 });
             }
