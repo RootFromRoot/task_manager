@@ -22,10 +22,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private List<Task> dataSet;
     private Activity activity;
-    private View.OnClickListener onClickListener;
-  private String name;
-    private String description;
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    private OnClickListener onClickListener;
+
+    private class MyViewHolder extends RecyclerView.ViewHolder {
         public View rootView;
         public TextView title, year, genre;
 
@@ -36,12 +35,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             title = (TextView) view.findViewById(R.id.title);
             genre = (TextView) view.findViewById(R.id.genre);
             year = (TextView) view.findViewById(R.id.year);
-
-
         }
     }
 
-    public class ButtonViewHolder extends RecyclerView.ViewHolder {
+    private class ButtonViewHolder extends RecyclerView.ViewHolder {
         public ButtonViewHolder(View view) {
             super(view);
         }
@@ -71,17 +68,24 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         if (holder instanceof MyViewHolder) {
-            if (onClickListener != null) {
-              ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(activity, TaskInfoActivity.class);
-                        intent.putExtra("name",name);
-                        intent.putExtra("description",description);
-                        activity.startActivity(intent);
+            ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onClickListener != null) {
+                        onClickListener.onClick(holder.getAdapterPosition());
                     }
-                });
-            }
+                }
+            });
+            ((MyViewHolder) holder).rootView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (onClickListener != null) {
+                        onClickListener.onLongClick(holder.getAdapterPosition());
+                        return true;
+                    }
+                    return false;
+                }
+            });
 
             ((MyViewHolder) holder).title.setText(task.getName());
             ((MyViewHolder) holder).genre.setText(task.getDescription());
@@ -105,14 +109,18 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemInserted(getDataSet().indexOf(task));
     }
 
-    public void removeTask() {
-
+    public void removeTask(Task task) {
+        getDataSet().remove(task);
+        notifyItemRemoved(getDataSet().indexOf(task));
     }
 
-
-    public void setOnClickListener(View.OnClickListener onClickListener) {
+    public void setOnClickListener(OnClickListener onClickListener) {
         this.onClickListener = onClickListener;
+    }
 
+    public interface OnClickListener {
+        void onClick(int position);
 
+        void onLongClick(int position);
     }
 }

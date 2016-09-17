@@ -84,10 +84,21 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener(new View.OnClickListener() {
+        adapter.setOnClickListener(new TaskListAdapter.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(int position) {
+                Task task = adapter.getDataSet().get(position);
 
+                startActivity(
+                        new Intent(MainActivity.this, TaskInfoActivity.class)
+                                .putExtra("name", task.getName())
+                                .putExtra("description", task.getDescription())
+                );
+            }
+
+            @Override
+            public void onLongClick(int position) {
+                Toast.makeText(MainActivity.this, "Long click...", Toast.LENGTH_SHORT).show(); // TODO implement method logic
             }
         });
     }
