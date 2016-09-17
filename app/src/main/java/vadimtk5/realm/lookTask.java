@@ -14,6 +14,7 @@ public class LookTask extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.look_task_menu,menu);
         return true;
     }

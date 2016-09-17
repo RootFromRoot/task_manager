@@ -1,6 +1,6 @@
 package vadimtk5.realm;
 
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -20,7 +20,7 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = getClass().getSimpleName();
 
     private List<Task> dataSet;
-    private Context context;
+    private Activity activity;
     private View.OnClickListener onClickListener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -29,11 +29,13 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public MyViewHolder(View view) {
             super(view);
-            context = view.getContext();
+
             rootView = view.findViewById(R.id.root_view);
             title = (TextView) view.findViewById(R.id.title);
             genre = (TextView) view.findViewById(R.id.genre);
             year = (TextView) view.findViewById(R.id.year);
+
+
         }
     }
 
@@ -43,8 +45,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public MyAdapter(Context context, List<Task> dataSet) {
-        this.context = context;
+    public MyAdapter(Activity activity, List<Task> dataSet) {
+        this.activity = activity;
         this.dataSet = dataSet;
     }
 
@@ -68,11 +70,13 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (holder instanceof MyViewHolder) {
             if (onClickListener != null) {
-                ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
+
+
+              ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, LookTask.class);//оцей блядь
-                        context.startActivity(intent);
+                        Intent intent = new Intent(activity, LookTask.class);
+                        activity.startActivity(intent);
                     }
                 });
             }
