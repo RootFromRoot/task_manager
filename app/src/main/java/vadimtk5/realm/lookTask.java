@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 
-public class LookTask extends AppCompatActivity {
+public class lookTask extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class LookTask extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.look_task_menu,menu);
+        getMenuInflater().inflate(R.menu.look_task_menu, menu);
         return true;
     }
 }
