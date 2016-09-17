@@ -38,12 +38,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private class ButtonViewHolder extends RecyclerView.ViewHolder {
-        public ButtonViewHolder(View view) {
-            super(view);
-        }
-    }
-
     public TaskListAdapter(Activity activity, List<Task> dataSet) {
         this.activity = activity;
         this.dataSet = dataSet;
@@ -51,11 +45,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
         return new MyViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.rv_task, parent, false));
-
     }
 
     @Override
@@ -90,8 +81,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((MyViewHolder) holder).title.setText(task.getName());
             ((MyViewHolder) holder).genre.setText(task.getDescription());
             ((MyViewHolder) holder).year.setText(task.getFormattedDate());
-        } else if (holder instanceof ButtonViewHolder) {
-
         }
     }
 

@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addNewTask(View view) {
-        Intent intent = new Intent(MainActivity.this, TaskSettingActivity.class);
+        Intent intent = new Intent(MainActivity.this, TaskCreateActivity.class);
         startActivityForResult(intent, RequestCodes.REQUEST_ADD_TASK);
 
         recyclerView.scrollToPosition(adapter.getDataSet().size() - 1);

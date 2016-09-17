@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="vadimtk5.realm.ui.activity.TaskSettingActivity">
+    tools:context="vadimtk5.realm.ui.activity.TaskCreateActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -45,11 +45,34 @@
             android:hint="Description"
             android:inputType="textMultiLine|textCapSentences" />
 
-        <DatePicker
-            android:id="@+id/date_picker"
+        <LinearLayout
+            android:id="@+id/ll_date_time_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                app:srcCompat="@drawable/ic_alarm_blue_grey_500_24dp" />
+
+            <TextView
+                android:id="@+id/tv_date_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:lines="1"
+                android:maxLines="1"
+                android:text="10.09 23:36"
+                android:textColor="@color/colorPrimary"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
