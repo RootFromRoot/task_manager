@@ -22,7 +22,7 @@
             android:windowSoftInputMode="adjustResize">
             <receiver android:name=".AlarmManagerBroadcastReceiver" />
         </activity>
-        <activity android:name=".LookTask"></activity>
+        <activity android:name=".lookTask"></activity>
     </application>
 
 </manifest>
