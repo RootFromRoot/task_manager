@@ -22,7 +22,8 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<Task> dataSet;
     private Activity activity;
     private View.OnClickListener onClickListener;
-
+  private String name;
+    private String description;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public View rootView;
         public TextView title, year, genre;
@@ -70,12 +71,12 @@ public class MyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if (holder instanceof MyViewHolder) {
             if (onClickListener != null) {
-
-
               ((MyViewHolder) holder).rootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(activity, LookTask.class);
+                        intent.putExtra("name",name);
+                        intent.putExtra("description",description);
                         activity.startActivity(intent);
                     }
                 });
