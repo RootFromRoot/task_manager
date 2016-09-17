@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
         setupRealm();
         setupRecyclerView();
-        alarm=new AlarmManagerBroadcastReceiver();
-
-
+        alarm = new AlarmManagerBroadcastReceiver();
     }
 
     private void setupToolbar() {

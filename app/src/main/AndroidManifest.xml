@@ -19,9 +19,12 @@
         </activity>
         <activity
             android:name=".ui.activity.TaskSettingActivity"
-            android:windowSoftInputMode="adjustResize">
-            <receiver android:name=".AlarmManagerBroadcastReceiver" />
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activity.TaskInfoActivity" />
+
+        <receiver
+            android:name=".data.broadcast.AlarmManagerBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 </manifest>
