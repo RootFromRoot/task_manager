@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,11 +18,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TaskSetting"
+            android:name=".ui.activity.TaskSettingActivity"
             android:windowSoftInputMode="adjustResize">
             <receiver android:name=".AlarmManagerBroadcastReceiver" />
         </activity>
-        <activity android:name=".lookTask"></activity>
+        <activity android:name=".ui.activity.TaskInfoActivity" />
     </application>
-
 </manifest>
