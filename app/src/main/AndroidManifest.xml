@@ -20,7 +20,9 @@
         <activity
             android:name=".ui.activity.TaskSettingActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.activity.TaskInfoActivity" />
+        <activity
+            android:name=".ui.activity.TaskInfoActivity"
+            android:label="@string/activity_task_info" />
 
         <receiver
             android:name=".data.broadcast.AlarmManagerBroadcastReceiver"
