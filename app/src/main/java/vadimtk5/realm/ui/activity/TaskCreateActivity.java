@@ -3,6 +3,7 @@ package vadimtk5.realm.ui.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +36,8 @@ public class TaskCreateActivity extends AppCompatActivity {
     private EditText ETName;
     private EditText ETDescription;
     private LinearLayout LLDateTimeContainer;
-    private TextView TVDateTime;
+    private TextView TVDate;
+    private TextView TVTime;
 
     private Calendar alarmCalendar;
 
@@ -51,6 +53,7 @@ public class TaskCreateActivity extends AppCompatActivity {
 
     private void setupLayout() {
         alarmCalendar = Calendar.getInstance();
+        updateDrawingDateTime();
 
         LLDateTimeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,10 +104,13 @@ public class TaskCreateActivity extends AppCompatActivity {
         try {
             Date dateTime = alarmCalendar.getTime();
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM HH:mm", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
             String formattedDateTime = dateFormat.format(dateTime);
+            TVDate.setText(formattedDateTime);
 
-            TVDateTime.setText(formattedDateTime);
+            dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            formattedDateTime = dateFormat.format(dateTime);
+            TVTime.setText(formattedDateTime);
         } catch (Exception ex) {
             Log.e(TAG, "updateDrawingDateTime()-> ", ex);
         }
@@ -115,7 +121,8 @@ public class TaskCreateActivity extends AppCompatActivity {
         ETName = (EditText) findViewById(R.id.editText);
         ETDescription = (EditText) findViewById(R.id.editText2);
         LLDateTimeContainer = (LinearLayout) findViewById(R.id.ll_date_time_container);
-        TVDateTime = (TextView) findViewById(R.id.tv_date_time);
+        TVDate = (TextView) findViewById(R.id.tv_date);
+        TVTime = (TextView) findViewById(R.id.tv_time);
     }
 
     private void setupToolbar() {

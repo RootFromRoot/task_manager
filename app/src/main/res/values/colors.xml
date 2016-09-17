@@ -8,4 +8,5 @@
     <color name="colorTextSecondary">#9a000000</color>
     <color name="colorTextDisabled">#8a000000</color>
     <color name="colorTextHint">#8a000000</color>
+    <color name="colorBackground">#EEEEEE</color>
 </resources>

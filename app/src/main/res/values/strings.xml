@@ -2,6 +2,7 @@
     <string name="app_name">Task Manager</string>
 
     <string name="activity_task_info">Task</string>
+    <string name="activity_task_create">New task</string>
 
     <string name="action_settings">Delete</string>
 </resources>

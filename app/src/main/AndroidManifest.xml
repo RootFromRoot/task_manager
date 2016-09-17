@@ -19,6 +19,7 @@
         </activity>
         <activity
             android:name=".ui.activity.TaskCreateActivity"
+            android:label="@string/activity_task_create"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.activity.TaskInfoActivity"
