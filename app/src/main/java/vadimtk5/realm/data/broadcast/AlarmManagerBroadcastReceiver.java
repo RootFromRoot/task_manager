@@ -6,13 +6,21 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.widget.Toast;
+
+import vadimtk5.realm.R;
+import vadimtk5.realm.ui.activity.TaskCreateActivity;
+import vadimtk5.realm.utils.RequestCodes;
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 
@@ -33,11 +41,36 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
 //проверяем параметр ONE_TIME, если это одиночный будильник,
 //выводим соответствующее сообщение.
             msgStr.append("Одноразовый будильник: ");
-        }
-        Format formatter = new SimpleDateFormat("hh:mm:ss a", Locale.getDefault());
-        msgStr.append(formatter.format(new Date()));
+            Intent notificationIntent = new Intent(context, TaskCreateActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(context,
+                    0, notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+            Resources res = context.getResources();
+            Notification.Builder builder = new Notification.Builder(context);
 
-        Toast.makeText(context, msgStr, Toast.LENGTH_LONG).show();
+            builder.setContentIntent(contentIntent)
+
+                    //.setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.hungrycat))
+
+                    .setTicker("Последнее китайское предупреждение!")
+                    .setWhen(System.currentTimeMillis())
+                    .setAutoCancel(true)
+
+                    .setContentTitle("Напоминание")
+
+                    .setContentText("Пора покормить кота");
+
+            Notification notification = builder.build();
+
+            NotificationManager notificationManager = (NotificationManager) context
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(RequestCodes.NOTIFY_ID, notification);
+        }
+
+        Format formatter = new SimpleDateFormat("hh:mm:ss", Locale.getDefault());
+        msgStr.append(formatter.format(new Date()));
+//alarm is started
+        //Toast.makeText(context, msgStr, Toast.LENGTH_LONG).show();
 
 //Разблокируем поток.
         wl.release();
@@ -49,7 +82,8 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         intent.putExtra(ONE_TIME, Boolean.FALSE);//Задаем параметр интента
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
 //Устанавливаем интервал срабатывания в 5 секунд.
-        am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, 1000 * 5, pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, 1000*5, pi);
+
     }
 
     public static void cancelAlarm(Context context) {
