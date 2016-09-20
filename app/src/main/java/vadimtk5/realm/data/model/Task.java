@@ -53,8 +53,10 @@ public class Task extends RealmObject {
     }
 
     public String getFormattedDate() {
-        SimpleDateFormat df = new SimpleDateFormat("dd MMM", Locale.getDefault());
-        return df.format(getDate());
+      /*  SimpleDateFormat df = new SimpleDateFormat("dd MMM", Locale.getDefault());
+        return df.format(getDate());*/
+
+        return getDate().toString();
     }
 
     public void setDate(Date date) {

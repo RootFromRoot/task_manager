@@ -16,6 +16,8 @@ import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import vadimtk5.realm.R;
@@ -23,11 +25,14 @@ import vadimtk5.realm.ui.activity.TaskCreateActivity;
 import vadimtk5.realm.utils.RequestCodes;
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
+    private final String TAG = getClass().getSimpleName();
 
     final public static String ONE_TIME = "onetime";
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "onReceive()-> new broadcast received");
+
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "YOUR TAG");
 //Осуществляем блокировку
@@ -37,30 +42,24 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
         StringBuilder msgStr = new StringBuilder();
 
-        if (extras != null & extras.getBoolean(ONE_TIME, Boolean.FALSE)) {
-//проверяем параметр ONE_TIME, если это одиночный будильник,
-//выводим соответствующее сообщение.
+        if (extras != null) {
+            //проверяем параметр ONE_TIME, если это одиночный будильник,
+            //выводим соответствующее сообщение.
             msgStr.append("Одноразовый будильник: ");
             Intent notificationIntent = new Intent(context, TaskCreateActivity.class);
             PendingIntent contentIntent = PendingIntent.getActivity(context,
                     0, notificationIntent,
                     PendingIntent.FLAG_CANCEL_CURRENT);
-            Resources res = context.getResources();
-            Notification.Builder builder = new Notification.Builder(context);
 
-            builder.setContentIntent(contentIntent)
-
-                    //.setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.hungrycat))
-
+            Notification notification = new NotificationCompat.Builder(context)
+                    .setContentIntent(contentIntent)
                     .setTicker("Последнее китайское предупреждение!")
+                    .setSmallIcon(R.drawable.ic_alarm_blue_grey_500_24dp)
                     .setWhen(System.currentTimeMillis())
                     .setAutoCancel(true)
-
                     .setContentTitle("Напоминание")
-
-                    .setContentText("Пора покормить кота");
-
-            Notification notification = builder.build();
+                    .setContentText("Пора покормить кота")
+                    .build();
 
             NotificationManager notificationManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -82,7 +81,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         intent.putExtra(ONE_TIME, Boolean.FALSE);//Задаем параметр интента
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
 //Устанавливаем интервал срабатывания в 5 секунд.
-        am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, 1000*5, pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, 1000 * 5, pi);
 
     }
 
