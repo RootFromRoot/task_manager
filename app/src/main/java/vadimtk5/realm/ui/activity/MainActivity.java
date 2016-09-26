@@ -77,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         dataSet.addAll(fetchTasksFromDb());
         adapter = new TaskListAdapter(this, dataSet);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
@@ -93,12 +94,24 @@ public class MainActivity extends AppCompatActivity {
                         new Intent(MainActivity.this, TaskInfoActivity.class)
                                 .putExtra("name", task.getName())
                                 .putExtra("description", task.getDescription())
+                                .putExtra("position",position)
                 );
             }
 
             @Override
             public void onLongClick(int position) {
-                Toast.makeText(MainActivity.this, "Long click...", Toast.LENGTH_SHORT).show(); // TODO implement method logic
+                final Task task = realm.where(Task.class).equalTo("id", adapter.getDataSet().get(position).getId()).findFirst();
+
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        task.deleteFromRealm();
+
+                    }
+                });
+
+                adapter.removeTask(adapter.getDataSet().get(position));
+
             }
         });
     }

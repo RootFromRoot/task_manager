@@ -9,13 +9,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import vadimtk5.realm.R;
+import vadimtk5.realm.data.model.Task;
+import vadimtk5.realm.ui.adapter.TaskListAdapter;
 
 public class TaskInfoActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
 
     private Toolbar toolbar;
-
+    private Realm realm;
+    private TaskListAdapter adapter;
     private TextView TVName;
     private TextView TVDescription;
 
@@ -27,6 +32,7 @@ public class TaskInfoActivity extends AppCompatActivity {
         initView();
         setupToolbar();
         setupLayout();
+        setupRealm();
     }
 
     private void setupLayout() {
@@ -38,6 +44,7 @@ public class TaskInfoActivity extends AppCompatActivity {
         String name = getIntent().getExtras().getString("name");
         String description = getIntent().getExtras().getString("description");
 
+
         TVName.setText(name);
         TVDescription.setText(description);
     }
@@ -46,7 +53,15 @@ public class TaskInfoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    private void setupRealm() {
+        Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this)
+                .name(Realm.DEFAULT_REALM_NAME)
+                .deleteRealmIfMigrationNeeded()
+                .schemaVersion(1)
+                .build()
+        );
+        realm = Realm.getDefaultInstance();
+    }
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         TVName = (TextView) findViewById(R.id.tv_name);
@@ -65,12 +80,37 @@ public class TaskInfoActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_delete:
+                int position = getIntent().getExtras().getInt("position");
+                final Task task = realm.where(Task.class).equalTo("id", adapter.getDataSet().get(position).getId()).findFirst();
+
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                       task.deleteFromRealm();
+
+                    }
+                });
+                return true;
+
+
             case R.id.action_edit:
                 Intent intent = new Intent(TaskInfoActivity.this,TaskCreateActivity.class);
                 startActivity(intent);
+                String name = TVName.getText().toString();
+                String description = TVDescription.getText().toString();
+               intent.putExtra("name",name);//transfer to TaskInfo.activity
+                intent.putExtra("description",description);//transfer to TaskInfo.activity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+    private void deleteTask(int position){
+
+
+
+
+        // adapter.removeTask(adapter.getDataSet().get(position));
     }
 }

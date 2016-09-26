@@ -1,10 +1,5 @@
 package vadimtk5.realm.data.broadcast;
 
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -12,13 +7,15 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import vadimtk5.realm.R;
 import vadimtk5.realm.ui.activity.TaskCreateActivity;
@@ -47,19 +44,20 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
             //выводим соответствующее сообщение.
             msgStr.append("Одноразовый будильник: ");
             Intent notificationIntent = new Intent(context, TaskCreateActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(context,
-                    0, notificationIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
             Notification notification = new NotificationCompat.Builder(context)
                     .setContentIntent(contentIntent)
-                    .setTicker("Последнее китайское предупреждение!")
-                    .setSmallIcon(R.drawable.ic_alarm_blue_grey_500_24dp)
+                    .setTicker("DEADLINE!")
+                    .setSmallIcon(R.drawable.ic_alarm_white_24dp)
                     .setWhen(System.currentTimeMillis())
                     .setAutoCancel(true)
-                    .setContentTitle("Напоминание")
-                    .setContentText("Пора покормить кота")
+                    .setContentTitle("DEADLINE")
+                    .setContentText("Time ended")
+                    .addAction(R.drawable.ic_restore_white_24dp, "Restore",contentIntent)
+                    .addAction(R.drawable.ic_check_circle_white_24dp,"Ok",contentIntent)
                     .build();
+            notification.flags = notification.flags | Notification.FLAG_INSISTENT|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
 
             NotificationManager notificationManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);

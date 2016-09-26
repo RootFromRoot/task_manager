@@ -47,8 +47,23 @@ public class TaskCreateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_create);
 
         initView();
+        getExtras();
         setupToolbar();
         setupLayout();
+    }
+
+    private void getExtras() {
+        if (getIntent() == null || getIntent().getExtras() == null) {
+            Log.e(TAG, "getExtras: Extras is null");
+            return;
+        }
+
+        if (ETName != null) {
+            ETName.setText(getIntent().getExtras().getString("name"));
+        }//transfer from TaskInfo.activity
+        if (ETDescription != null) {
+            ETName.setText(getIntent().getExtras().getString("description"));
+        }//transfer from TaskInfo.activity
     }
 
     private void setupLayout() {
@@ -98,6 +113,7 @@ public class TaskCreateActivity extends AppCompatActivity {
                 datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
             }
         });
+
     }
 
     private void updateDrawingDateTime() {
