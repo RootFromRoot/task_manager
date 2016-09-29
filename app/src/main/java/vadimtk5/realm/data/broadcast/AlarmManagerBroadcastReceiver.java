@@ -23,6 +23,7 @@ import vadimtk5.realm.utils.RequestCodes;
 
 public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
     private final String TAG = getClass().getSimpleName();
+    final public static int okCode = 1;
 
     final public static String ONE_TIME = "onetime";
 
@@ -43,21 +44,22 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
             //проверяем параметр ONE_TIME, если это одиночный будильник,
             //выводим соответствующее сообщение.
             msgStr.append("Одноразовый будильник: ");
-            Intent notificationIntent = new Intent(context, TaskCreateActivity.class);
-            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+            PendingIntent intentRestore = PendingIntent.getActivity(context, 0, new Intent(context, TaskCreateActivity.class), 0);
+            PendingIntent intentOk = PendingIntent.getBroadcast(context, 0, new Intent(context, AlarmReceiver.class).putExtra("action", okCode), 0);
 
             Notification notification = new NotificationCompat.Builder(context)
-                    .setContentIntent(contentIntent)
+                    //.setContentIntent(intentRestore)
                     .setTicker("DEADLINE!")
                     .setSmallIcon(R.drawable.ic_alarm_white_24dp)
                     .setWhen(System.currentTimeMillis())
                     .setAutoCancel(true)
                     .setContentTitle("DEADLINE")
                     .setContentText("Time ended")
-                    .addAction(R.drawable.ic_restore_white_24dp, "Restore",contentIntent)
-                    .addAction(R.drawable.ic_check_circle_white_24dp,"Ok",contentIntent)
+                    .addAction(R.drawable.ic_restore_white_24dp, "Restore", intentRestore)
+                    .addAction(R.drawable.ic_check_circle_white_24dp, "Ok", intentOk)
                     .build();
-            notification.flags = notification.flags | Notification.FLAG_INSISTENT|Notification.DEFAULT_LIGHTS|Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
+
+            //notification.flags = notification.flags | Notification.DEFAULT_LIGHTS |  Notification.DEFAULT_VIBRATE;
 
             NotificationManager notificationManager = (NotificationManager) context
                     .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -79,7 +81,7 @@ public class AlarmManagerBroadcastReceiver extends BroadcastReceiver {
         intent.putExtra(ONE_TIME, Boolean.FALSE);//Задаем параметр интента
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, 0);
 //Устанавливаем интервал срабатывания в 5 секунд.
-        am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, 1000 * 5, pi);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, 1, pi);
 
     }
 

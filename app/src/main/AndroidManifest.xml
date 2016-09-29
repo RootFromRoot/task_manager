@@ -29,5 +29,10 @@
             android:name=".data.broadcast.AlarmManagerBroadcastReceiver"
             android:enabled="true"
             android:exported="false" />
+
+        <receiver
+            android:name=".data.broadcast.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 </manifest>

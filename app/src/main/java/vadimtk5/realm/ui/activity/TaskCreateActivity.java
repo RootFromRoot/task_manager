@@ -28,7 +28,7 @@ import java.util.Locale;
 import vadimtk5.realm.data.broadcast.AlarmManagerBroadcastReceiver;
 import vadimtk5.realm.R;
 
-public class TaskCreateActivity extends AppCompatActivity {
+public class TaskCreateActivity extends AppCompatActivity {//TODO  EditActivity
     private final String TAG = getClass().getSimpleName();
 
     private Toolbar toolbar;
@@ -62,7 +62,7 @@ public class TaskCreateActivity extends AppCompatActivity {
             ETName.setText(getIntent().getExtras().getString("name"));
         }//transfer from TaskInfo.activity
         if (ETDescription != null) {
-            ETName.setText(getIntent().getExtras().getString("description"));
+            ETDescription.setText(getIntent().getExtras().getString("description"));
         }//transfer from TaskInfo.activity
     }
 
@@ -157,7 +157,6 @@ public class TaskCreateActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     public void save(View view) {
         if (ETName == null || ETDescription == null) {

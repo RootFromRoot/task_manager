@@ -71,9 +71,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addTaskToDb(Task task) {
+        task.setId(getNextKey());
+
         realm.beginTransaction();
         realm.insert(task);
         realm.commitTransaction();
+    }
+
+    public int getNextKey() {
+        try {
+            return realm.where(Task.class).max("id").intValue() + 1; // KOSTIL'
+        } catch (Exception ex) {
+            Log.e(TAG, "getNextKey: ", ex);
+            return 0;
+        }
     }
 
     private void setupRecyclerView() {
@@ -94,24 +105,23 @@ public class MainActivity extends AppCompatActivity {
                         new Intent(MainActivity.this, TaskInfoActivity.class)
                                 .putExtra("name", task.getName())
                                 .putExtra("description", task.getDescription())
-                                .putExtra("position",position)
+                                .putExtra("position", position)
                 );
             }
 
             @Override
             public void onLongClick(int position) {
+                Log.d(TAG, "onLongClick: " + adapter.getDataSet().get(position).getId());
                 final Task task = realm.where(Task.class).equalTo("id", adapter.getDataSet().get(position).getId()).findFirst();
 
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         task.deleteFromRealm();
-
                     }
                 });
 
-                adapter.removeTask(adapter.getDataSet().get(position));
-
+                adapter.removeTask(position);
             }
         });
     }

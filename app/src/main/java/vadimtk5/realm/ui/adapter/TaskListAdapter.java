@@ -76,7 +76,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             ((MyViewHolder) holder).title.setText(task.getName());
             ((MyViewHolder) holder).genre.setText(task.getDescription());
-            ((MyViewHolder) holder).year.setText(task.getFormattedDate());
+            ((MyViewHolder) holder).year.setText(String.valueOf(task.getId()));
         }
     }
 
@@ -94,9 +94,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyItemInserted(getDataSet().indexOf(task));
     }
 
-    public void removeTask(Task task) {
-        getDataSet().remove(task);
-        notifyItemRemoved(getDataSet().indexOf(task));
+    public void removeTask(int position) {
+        getDataSet().remove(position);
+        notifyItemRemoved(position);
     }
 
     public void setOnClickListener(OnClickListener onClickListener) {

@@ -53,6 +53,7 @@ public class TaskInfoActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     private void setupRealm() {
         Realm.setDefaultConfiguration(new RealmConfiguration.Builder(this)
                 .name(Realm.DEFAULT_REALM_NAME)
@@ -62,6 +63,7 @@ public class TaskInfoActivity extends AppCompatActivity {
         );
         realm = Realm.getDefaultInstance();
     }
+
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         TVName = (TextView) findViewById(R.id.tv_name);
@@ -87,7 +89,7 @@ public class TaskInfoActivity extends AppCompatActivity {
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                       task.deleteFromRealm();
+                        task.deleteFromRealm();
 
                     }
                 });
@@ -95,20 +97,19 @@ public class TaskInfoActivity extends AppCompatActivity {
 
 
             case R.id.action_edit:
-                Intent intent = new Intent(TaskInfoActivity.this,TaskCreateActivity.class);
-                startActivity(intent);
                 String name = TVName.getText().toString();
                 String description = TVDescription.getText().toString();
-               intent.putExtra("name",name);//transfer to TaskInfo.activity
-                intent.putExtra("description",description);//transfer to TaskInfo.activity
+
+                startActivity(new Intent(TaskInfoActivity.this, TaskCreateActivity.class)
+                        .putExtra("name", name)
+                        .putExtra("description", description));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    private void deleteTask(int position){
 
-
+    private void deleteTask(int position) {
 
 
         // adapter.removeTask(adapter.getDataSet().get(position));
